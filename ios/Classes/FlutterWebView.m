@@ -336,7 +336,14 @@
   }
   NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:nsUrl];
   [request setAllHTTPHeaderFields:headers];
-  [_webView loadRequest:request];
+
+    if([url containsString:@"file://"]){
+        NSString *path = [url stringByReplacingOccurrencesOfString:@"index.html" withString:@""];
+        [_webView loadFileURL:[NSURL fileURLWithPath:url] allowingReadAccessToURL:[NSURL fileURLWithPath:path]];
+    }else{
+        [_webView loadRequest:request];
+    }
+
   return true;
 }
 
