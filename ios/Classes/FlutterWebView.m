@@ -71,6 +71,7 @@
 
     _webView = [[FullScreenWKWebView alloc] initWithFrame:frame configuration:configuration];
       _navigationDelegate = [[FLTWKNavigationDelegate alloc] initWithChannel:_channel];
+     [_webView.configuration.preferences setValue:@YES forKey:@"allowFileAccessFromFileURLs"];
     _webView.navigationDelegate = _navigationDelegate;
     __weak __typeof__(self) weakSelf = self;
     [_channel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
