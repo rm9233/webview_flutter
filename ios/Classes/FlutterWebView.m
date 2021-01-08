@@ -339,8 +339,17 @@
   [request setAllHTTPHeaderFields:headers];
 
     if([url containsString:@"file://"]){
-        NSString *path = [url stringByReplacingOccurrencesOfString:@"index.html" withString:@""];
-        [_webView loadFileURL:[NSURL fileURLWithPath:url] allowingReadAccessToURL:[NSURL fileURLWithPath:path]];
+       
+        NSString *path = [url substringToIndex:[url rangeOfString:@"/superkids"].location];
+        if(path != nil){
+            NSLog(@"%@",path);
+        }
+        if (@available(iOS 9.0, *)) {
+            
+            [_webView loadFileURL:[NSURL fileURLWithPath:url] allowingReadAccessToURL:[NSURL fileURLWithPath:path]];
+        } else {
+            // Fallback on earlier versions
+        }
     }else{
         [_webView loadRequest:request];
     }
